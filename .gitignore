@@ -18,3 +18,8 @@ venv-*/
 *.pyc
 __pycache__/
 .pytest_cache/
+# Local build artifacts
+/server/build/
+
+# Local backup files
+/client/public/boost-bk.jpg

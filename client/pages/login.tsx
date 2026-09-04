@@ -42,14 +42,14 @@ const LoginScreen = () => {
             case ErrorId.LoginFailed:
               setError("root", {
                 type: "value",
-                message: "Invalid username or password.",
+                message: "邮箱或密码错误。",
               });
               break;
           }
         } catch (err) {
           setError("root", {
             type: "value",
-            message: "There was an unexpected error. Please try again later.",
+            message: "登录失败，请稍后重试。",
           });
         }
       });
@@ -67,7 +67,7 @@ const LoginScreen = () => {
           className={`${styles.bodycontainer} p-12 flex flex-col justify-center`}
         >
           <div className="flex justify-center">
-            <FormCard title="Log in to BoostServerTech chat">
+            <FormCard title="欢迎登录 AsyncChat">
               <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="flex-1 flex flex-col"
@@ -89,13 +89,13 @@ const LoginScreen = () => {
                 )}
                 <div className="pt-8 flex justify-center">
                   <Button variant="contained" type="submit" disabled={loading}>
-                    {loading ? "Logging in..." : "Log me in!"}
+                  {loading ? "正在登录..." : "登录账号"}
                   </Button>
                 </div>
                 <div className="pt-8 flex justify-center">
                   <p className="p-0 m-0 text-sm">
-                    Don&apos;t have an account? Go to{" "}
-                    <Link href="/">Create account</Link>
+                  还没有账号？{" "}
+                  <Link href="/">立即注册</Link>
                   </p>
                 </div>
               </form>

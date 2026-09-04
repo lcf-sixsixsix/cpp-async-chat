@@ -50,10 +50,10 @@ def test_hello(session: GeneratedSession):
 
         # We know which rooms we have, but not the messages they've got
         expected_rooms = [
-            ("beast", "Boost.Beast"),
-            ("async", "Boost.Async"),
-            ("db", "Database connectors"),
-            ("wasm", "Web assembly"),
+        ("beast", "AsyncChat 大厅"),
+        ("async", "异步编程"),
+        ("db", "数据库技术"),
+         ("wasm", "Web 开发"),
         ]
 
         # Validate user

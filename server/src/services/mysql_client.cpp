@@ -59,7 +59,7 @@ static boost::mysql::handshake_params default_handshake_params() noexcept
 {
     return {
         "root",             // user
-        "",                 // blank passwd
+        "1",                 // blank passwd
         "servertech_chat",  // db
     };
 }

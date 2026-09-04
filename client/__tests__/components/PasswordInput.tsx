@@ -21,7 +21,7 @@ const Form = () => {
 };
 
 describe("PasswordInput", () => {
-  const tooShortError = "Passwords should have at least 10 characters.";
+  const tooShortError = "密码至少包含 10 个字符。";
 
   test("Showing/hiding password", async () => {
     const user = userEvent.setup();
@@ -30,7 +30,7 @@ describe("PasswordInput", () => {
     const { asFragment } = render(<Form />);
 
     // Rendered correctly. By default, hidden
-    expect(screen.getByText("Password")).toBeInTheDocument();
+    expect(screen.getByText("密码")).toBeInTheDocument();
     expect(screen.getByLabelText("password")).toHaveAttribute(
       "type",
       "password",

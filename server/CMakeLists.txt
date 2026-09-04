@@ -9,8 +9,11 @@ cmake_minimum_required(VERSION 3.16.0)
 project(servertech_chat)
 
 # Boost.Context is required to run stackful coroutines
-find_package(Boost REQUIRED COMPONENTS headers context json regex url)
+# find_package(Boost REQUIRED COMPONENTS headers context json regex url)
+# Darren修改boost路径为/usr/local/lib，因为我们安装的boost是在该路径下
+find_package(Boost REQUIRED COMPONENTS headers context json regex url PATHS /usr/local/lib)
 
+ 
 # OpenSSL is required by Boost.Redis
 find_package(OpenSSL REQUIRED)
 
@@ -74,6 +77,8 @@ target_link_libraries(
     ICU::data
     ICU::i18n
     ICU::uc
+    boost_charconv
+    pthread
 )
 
 # These are required because we're building Boost.Asio, Boost.Beast and Boost.MySQL

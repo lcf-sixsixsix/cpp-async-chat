@@ -21,7 +21,7 @@ const Form = () => {
 };
 
 describe("UsernameInput", () => {
-  const tooShortError = "Usernames should have at least 4 characters.";
+  const tooShortError = "用户名至少包含 4 个字符。";
 
   test("Success", async () => {
     const user = userEvent.setup();
@@ -30,7 +30,7 @@ describe("UsernameInput", () => {
     const { asFragment } = render(<Form />);
 
     // Rendered correctly
-    expect(screen.getByText("Username (public)")).toBeInTheDocument();
+    expect(screen.getByText("用户名")).toBeInTheDocument();
 
     // Type a value
     await user.type(screen.getByLabelText("username"), "somenickname");

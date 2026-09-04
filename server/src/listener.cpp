@@ -62,7 +62,7 @@ static void accept_loop(
         boost::asio::spawn(
             sock.get_executor(),
             [state = st, socket = std::move(sock)](boost::asio::yield_context yield) mutable {
-                run_http_session(std::move(socket), std::move(state), yield);
+                run_http_session(std::move(socket), std::move(state), yield);   //重点函数
             },
             rethrow_handler  // Propagate exceptions to the io_context
         );

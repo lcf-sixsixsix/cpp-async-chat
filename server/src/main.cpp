@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
     st->redis().start_run();
 
     // Start listening for HTTP connections. This will run until the context is stopped
-    auto ec = launch_http_listener(ioc.get_executor(), listening_endpoint, st);
+    auto ec = launch_http_listener(ioc.get_executor(), listening_endpoint, st); // 对外提供服务的入口
     if (ec)
     {
         log_error(ec, "Error launching the HTTP listener");

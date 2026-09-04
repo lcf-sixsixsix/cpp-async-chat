@@ -8,7 +8,7 @@ describe("Header", () => {
     const { asFragment } = render(<Header />);
 
     // Sanity check
-    expect(screen.getByText("Source code")).toBeInTheDocument();
+    expect(screen.getByText("GitHub")).toBeInTheDocument();
 
     // Snapshot test
     expect(asFragment()).toMatchSnapshot();

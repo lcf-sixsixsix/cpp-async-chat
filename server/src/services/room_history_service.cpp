@@ -10,7 +10,7 @@
 #include <array>
 #include <string_view>
 #include <unordered_set>
-
+#include <iostream>
 #include "business_types.hpp"
 #include "services/mysql_client.hpp"
 #include "services/redis_client.hpp"
@@ -57,6 +57,7 @@ result_with_message<std::pair<message_batch, username_map>> room_history_service
     boost::asio::yield_context yield
 )
 {
+    std::cout << __FUNCTION__ << "  room_id  " << room_id << std::endl;
     // Compose an aray with a single request
     std::array<std::string_view, 1> room_ids{room_id};
 

@@ -40,7 +40,9 @@ describe("CreateAccountPage page", () => {
     await user.type(screen.getByLabelText("email"), email);
     await user.type(screen.getByLabelText("password"), password);
     await user.type(screen.getByLabelText("username"), username);
-    await user.click(screen.getByText("Create my account"));
+    await user.click(
+      screen.getByRole("button", { name: "注册账号" }),
+    );
 
     // We sent the data to the server
     expect(mockedApi.createAccount).toBeCalledTimes(1);
@@ -76,7 +78,7 @@ describe("CreateAccountPage page", () => {
     await user.type(screen.getByLabelText("email"), email);
     await user.type(screen.getByLabelText("password"), password);
     await user.type(screen.getByLabelText("username"), username);
-    await user.click(screen.getByText("Create my account"));
+    await user.click(screen.getByText("注册账号"));
 
     // We sent the data to the server
     expect(mockedApi.createAccount).toBeCalledTimes(1);
@@ -87,7 +89,7 @@ describe("CreateAccountPage page", () => {
     });
 
     // We showed an error message and did not navigate
-    expect(screen.getByText(expectedMsg)).toBeInTheDocument();
+    expect(await screen.findByText(expectedMsg)).toBeInTheDocument();
     expect(mockedAuth.setHasAuth).not.toBeCalled();
     expect(useRouter().push).not.toBeCalled();
   });

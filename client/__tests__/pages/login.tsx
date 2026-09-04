@@ -51,7 +51,9 @@ describe("login page", () => {
     // Fill in the form and hit submit
     await user.type(screen.getByLabelText("email"), email);
     await user.type(screen.getByLabelText("password"), password);
-    await user.click(screen.getByText("Log me in!"));
+    await user.click(
+  screen.getByRole("button", { name: "登录账号" }),
+);
 
     // We sent the data to the server
     expect(mockedApi.login).toBeCalledTimes(1);
@@ -75,7 +77,9 @@ describe("login page", () => {
     // Fill in the form and hit submit
     await user.type(screen.getByLabelText("email"), email);
     await user.type(screen.getByLabelText("password"), password);
-    await user.click(screen.getByText("Log me in!"));
+    await user.click(
+  screen.getByRole("button", { name: "登录账号" }),
+);
 
     // We sent the data to the server
     expect(mockedApi.login).toBeCalledTimes(1);
@@ -83,7 +87,7 @@ describe("login page", () => {
 
     // We showed an error message and did not navigate
     expect(
-      screen.getByText("Invalid username or password."),
+      await screen.findByText("邮箱或密码错误。"),
     ).toBeInTheDocument();
     expect(mockedAuth.setHasAuth).not.toBeCalled();
     expect(useRouter().push).not.toBeCalled();

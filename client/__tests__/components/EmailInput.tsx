@@ -28,14 +28,14 @@ describe("EmailInput", () => {
     const { asFragment } = render(<Form />);
 
     // Rendered correctly
-    expect(screen.getByText("Email")).toBeInTheDocument();
+    expect(screen.getByText("邮箱")).toBeInTheDocument();
 
     // Type a value
     await user.type(screen.getByLabelText("email"), "test@test.com");
 
     // No error
     expect(screen.getByDisplayValue("test@test.com")).toBeInTheDocument();
-    expect(screen.queryByText("Please enter a valid email.")).toBeNull();
+    expect(screen.queryByText("请输入有效的邮箱地址。")).toBeNull();
 
     // Snapshot test
     expect(asFragment()).toMatchSnapshot();
@@ -52,7 +52,7 @@ describe("EmailInput", () => {
 
     // Error message shown
     expect(screen.getByDisplayValue("bad-email")).toBeInTheDocument();
-    expect(screen.getByText("Please enter a valid email.")).toBeInTheDocument();
+    expect(screen.getByText("请输入有效的邮箱地址。")).toBeInTheDocument();
 
     // Snapshot test
     expect(asFragment()).toMatchSnapshot();

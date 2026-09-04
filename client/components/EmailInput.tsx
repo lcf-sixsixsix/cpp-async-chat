@@ -18,18 +18,18 @@ export default function EmailInput<TFieldValues extends FieldValues>({
   return (
     <TextField
       variant="standard"
-      label="Email"
+      label="邮箱"
       required
       inputProps={{ maxLength: 100, "aria-label": "email" }}
       type="email"
       {...register(name, {
         required: {
           value: true,
-          message: "This field is required.",
+          message: "请输入邮箱地址。",
         },
         pattern: {
           value: emailRegex,
-          message: "Please enter a valid email.",
+          message: "请输入有效的邮箱地址。",
         },
       })}
       error={!!errorMessage}

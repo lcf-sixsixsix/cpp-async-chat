@@ -1,4 +1,7 @@
-# BoostServerTech Chat
+# AsyncChat
+
+基于 C++17、Boost.Asio、Boost.Beast、WebSocket、Redis、
+MySQL 和 Next.js 实现的实时网络聊天室
 
 This repository holds the code for a chat application written in C++.
 
@@ -47,3 +50,15 @@ You can find out more [here](https://anarthal.github.io/servertech-chat/03-fork-
 
 Drop us a message in [the cpplang Slack](https://cpplang.slack.com/archives/C05MLSQGA01)!
 Contributors are more than welcome!
+
+
+
+
+## 开源说明
+
+本项目基于
+[anarthal/servertech-chat](https://github.com/anarthal/servertech-chat)
+进行二次开发，并遵循 Boost Software License。
+
+本人主要完成了项目环境搭建、界面定制、中文化适配、
+代码流程梳理、配置调整及功能优化。

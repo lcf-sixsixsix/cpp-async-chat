@@ -18,7 +18,7 @@
 
 #include <cstdint>
 #include <string_view>
-
+#include <iostream>
 #include "business_types.hpp"
 #include "timestamp.hpp"
 
@@ -132,6 +132,7 @@ chat::any_client_event chat::parse_client_event(std::string_view from)
         CHAT_RETURN_ERROR(errc::websocket_parse_error)
     const auto& payload = it->value();
 
+    std::cout << __FUNCTION__ << ": type=" << type  << std::endl;
     // Parse the message, depending on its type
     if (type == "clientMessages")
     {

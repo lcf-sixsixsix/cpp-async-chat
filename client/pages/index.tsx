@@ -75,14 +75,14 @@ export default function HomePage() {
         <Header />
         <div className={`${styles.bodycontainer} p-12`}>
           <div className="text-center pb-8">
-            <p className="text-3xl p-3 m-0">Welcome to</p>
-            <p className="text-6xl p-3 m-0">💬 BoostServerTech Chat 💬</p>
+            <p className="text-3xl p-3 m-0">欢迎使用</p>
+            <p className="text-6xl p-3 m-0">💬 AsyncChat 💬</p>
             <p className="text-xl p-3 m-0">
-              A chat app written using the Boost C++ libraries
+            基于 C++、Boost.Asio 和 WebSocket 的实时聊天室
             </p>
           </div>
           <div className="flex justify-center">
-            <FormCard title="Ready to try it?">
+          <FormCard title="创建 AsyncChat 账号">
               <form
                 className="flex-1 flex flex-col"
                 onSubmit={handleSubmit(onSubmit)}
@@ -110,13 +110,13 @@ export default function HomePage() {
                 )}
                 <div className="pt-8 flex justify-center">
                   <Button variant="contained" type="submit" disabled={loading}>
-                    {loading ? "Creating account..." : "Create my account"}
+                  {loading ? "正在创建..." : "注册账号"}
                   </Button>
                 </div>
                 <div className="pt-8 flex justify-center">
                   <p className="p-0 m-0 text-sm">
-                    Already have an account? Go to{" "}
-                    <Link href="/login">Sign In</Link>
+                  已有账号？{" "}
+                  <Link href="/login">立即登录</Link>
                   </p>
                 </div>
               </form>

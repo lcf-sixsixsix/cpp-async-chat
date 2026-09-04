@@ -17,6 +17,7 @@
 #include <string>
 #include <string_view>
 #include <vector>
+#include <iostream>
 
 #include "api/api_types.hpp"
 #include "business_types.hpp"
@@ -41,10 +42,10 @@ static constexpr std::array<std::string_view, 4> room_ids{
 };
 
 static constexpr std::array<std::string_view, room_ids.size()> room_names{
-    "Boost.Beast",
-    "Boost.Async",
-    "Database connectors",
-    "Web assembly",
+    "AsyncChat 大厅",
+    "异步编程",
+    "数据库技术",
+    "Web 开发",
 };
 
 // An owning type containing data for the hello event.
@@ -98,7 +99,7 @@ struct event_handler_visitor
         msgs.reserve(evt.messages.size());
         for (auto& msg : evt.messages)
         {
-            msgs.push_back(message{
+            msgs.push_back(message{ //1.先把消息存储到std::vector<message> msgs;
                 "",  // blank ID, will be assigned by Redis
                 std::move(msg.content),
                 timestamp,
@@ -106,22 +107,22 @@ struct event_handler_visitor
             });
         }
 
-        // Store it in Redis
-        auto ids_result = st.redis().store_messages(evt.roomId, msgs, yield);
+        // Store it in Redis  2. 把消息存储到redis，使用redis的stream类型 参考：https://www.runoob.com/redis/redis-stream.html
+        auto ids_result = st.redis().store_messages(evt.roomId, msgs, yield); //返回消息id
         if (ids_result.has_error())
             return std::move(ids_result).error();
-        auto& ids = ids_result.value();
+        auto& ids = ids_result.value(); //获取到消息id
 
         // Set the message IDs appropriately
         assert(msgs.size() == ids.size());
         for (std::size_t i = 0; i < msgs.size(); ++i)
-            msgs[i].id = std::move(ids[i]);
+            msgs[i].id = std::move(ids[i]);     //更新消息id
 
         // Compose a server_messages event with all data we have
-        server_messages_event server_evt{evt.roomId, current_user, msgs};
+        server_messages_event server_evt{evt.roomId, current_user, msgs};   //封装消息
 
         // Broadcast the event to all clients
-        st.pubsub().publish(evt.roomId, server_evt.to_json());
+        st.pubsub().publish(evt.roomId, server_evt.to_json());  //发送给所有的客户端
         return {};
     }
 
@@ -168,12 +169,12 @@ public:
     }
 
     // Runs the session until completion
-    error_with_message run(boost::asio::yield_context yield)
+    error_with_message run(boost::asio::yield_context yield)    //每个客户端在服务器都有这个一个对应的session，每个session都有一个对应的协程
     {
         error_code ec;
 
         // Check that the user is authenticated
-        auto user_result = st_->cookie_auth().user_from_cookie(ws_.upgrade_request(), yield);
+        auto user_result = st_->cookie_auth().user_from_cookie(ws_.upgrade_request(), yield);   //读取cookie中的用户信息
         if (user_result.has_error())
         {
             // If it's not, close the websocket. This is the preferred approach
@@ -193,14 +194,15 @@ public:
         auto pubsub_guard = st_->pubsub().subscribe_guarded(shared_from_this(), room_ids);
 
         // Retrieve the data required for the hello message
-        auto hello_data = get_hello_data(*st_, yield);
+        auto hello_data = get_hello_data(*st_, yield);  //获取房间的历史消息
         if (hello_data.has_error())
             return hello_data.error();
 
         // Compose the hello event and write it
-        hello_event hello_evt{current_user, hello_data->rooms, hello_data->usernames};
+        hello_event hello_evt{current_user, hello_data->rooms, hello_data->usernames};  //websocket刚连接时，封装hello消息
         auto serialized_hello = hello_evt.to_json();
-        ec = ws_.write_locked(serialized_hello, write_guard, yield);
+        std::cout << __FUNCTION__ << " send hello: " << serialized_hello << std::endl;
+        ec = ws_.write_locked(serialized_hello, write_guard, yield);  // 发送hello消息
         if (ec)
             return {ec};
 
@@ -208,18 +210,18 @@ public:
         write_guard.reset();
 
         // Read subsequent messages from the websocket and dispatch them
-        while (true)
+        while (true)        //在这个循环里不断读取客户端发送过来的消息，然后再转发给其他客户端
         {
             // Read a message
-            auto raw_msg = ws_.read(yield);
+            auto raw_msg = ws_.read(yield); // 1. 读取消息
             if (raw_msg.has_error())
                 return {raw_msg.error()};
 
-            // Deserialize it
-            auto msg = chat::parse_client_event(raw_msg.value());
+            // Deserialize it   解析json数据
+            auto msg = chat::parse_client_event(raw_msg.value());  // 2. 通过解析json数据解析客户端发送的消息
 
             // Dispatch
-            auto err = boost::variant2::visit(event_handler_visitor{current_user, ws_, *st_, yield}, msg);
+            auto err = boost::variant2::visit(event_handler_visitor{current_user, ws_, *st_, yield}, msg); // 处理客户端发送的消息
             if (err.ec)
                 return err;
         }

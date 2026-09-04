@@ -18,9 +18,9 @@ exports[`chat page ChatScreen component 1`] = `
             class="pr-3 flex flex-col justify-center"
           >
             <div
-              class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault css-184hllq-MuiAvatar-root"
+              class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault css-1pmqlkc-MuiAvatar-root"
             >
-              B
+              A
             </div>
           </div>
           <div
@@ -30,7 +30,7 @@ exports[`chat page ChatScreen component 1`] = `
               class="m-0 font-bold pb-2"
               data-testid="room-name"
             >
-              Boost.Beast
+              AsyncChat 大厅
             </p>
             <p
               class="m-0 overflow-hidden text-ellipsis whitespace-nowrap"
@@ -50,7 +50,7 @@ exports[`chat page ChatScreen component 1`] = `
             class="pr-3 flex flex-col justify-center"
           >
             <div
-              class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault css-5bf77t-MuiAvatar-root"
+              class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault css-1hros06-MuiAvatar-root"
             >
               W
             </div>
@@ -107,7 +107,7 @@ exports[`chat page ChatScreen component 1`] = `
             class="pr-5 flex flex-col justify-end"
           >
             <div
-              class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault css-r4lbtz-MuiAvatar-root"
+              class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault css-q4mnij-MuiAvatar-root"
             >
               U
             </div>

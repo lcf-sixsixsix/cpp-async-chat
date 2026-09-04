@@ -4,7 +4,7 @@
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
-
+#include <iostream>
 #include "api/auth.hpp"
 #include "api/api_types.hpp"
 #include "request_context.hpp"
@@ -50,6 +50,7 @@ response_builder::response_type chat::handle_create_account(
         return ctx.response().bad_request_json("email: invalid format");
     if (req_params.password.size() < min_password_size || req_params.password.size() > max_password_size)
         return ctx.response().bad_request_json("password: invalid size");
+    std::cout << __FUNCTION__ << "  username  " << req_params.username << std::endl;
 
     // Hash the password before insertion. TODO: this is an ultra-expensive
     // computation that should be run in a thread pool.
@@ -84,6 +85,7 @@ response_builder::response_type chat::handle_login(
     boost::asio::yield_context yield
 )
 {
+    std::cout << ctx.request_target() << std::endl;
     // Parse params
     auto parse_result = ctx.parse_json_body<login_request>();
     if (parse_result.has_error())

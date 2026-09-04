@@ -9,12 +9,11 @@ exports[`Header renders the page header 1`] = `
       alt="Boost logo"
       data-nimg="1"
       decoding="async"
-      height="60"
+      height="75"
       loading="lazy"
-      src="/_next/image?url=%2Fimg.jpg&w=128&q=75"
-      srcset="/_next/image?url=%2Fimg.jpg&w=64&q=75 1x, /_next/image?url=%2Fimg.jpg&w=128&q=75 2x"
+      src="/img.jpg"
       style="color: transparent;"
-      width="60"
+      width="75"
     />
     <div
       class="flex-1 flex justify-end align-middle"
@@ -23,20 +22,20 @@ exports[`Header renders the page header 1`] = `
         class="flex flex-col justify-center pr-12 pl-12"
       >
         <a
-          class="no-underline text-2xl text-black"
-          href="https://github.com/anarthal/servertech-chat"
+          class="no-underline text-xl text-gray-800 hover:text-blue-600"
+          href="https://github.com/lcf-sixsixsix/cpp-async-chat"
         >
-          Source code
+          GitHub
         </a>
       </div>
       <div
         class="flex flex-col justify-center pr-12 pl-12"
       >
         <a
-          class="no-underline text-2xl text-black"
-          href="https://anarthal.github.io/servertech-chat/"
+          class="no-underline text-xl text-gray-800 hover:text-blue-600"
+          href="https://github.com/lcf-sixsixsix/cpp-async-chat#readme"
         >
-          Docs
+          项目介绍
         </a>
       </div>
     </div>

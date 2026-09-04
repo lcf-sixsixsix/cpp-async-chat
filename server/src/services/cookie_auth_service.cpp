@@ -8,7 +8,7 @@
 #include "services/cookie_auth_service.hpp"
 
 #include <algorithm>
-
+#include <iostream>
 #include "error.hpp"
 #include "services/mysql_client.hpp"
 #include "services/redis_client.hpp"
@@ -16,6 +16,7 @@
 #include "util/cookie.hpp"
 
 using namespace chat;
+ 
 namespace http = boost::beast::http;
 
 static constexpr std::string_view session_cookie_name = "sid";
@@ -57,7 +58,7 @@ result_with_message<std::int64_t> cookie_auth_service::user_id_from_cookie(
     });
     if (cookie_it == cookies.end())
         CHAT_RETURN_ERROR_WITH_MESSAGE(errc::requires_auth, "")
-
+    std::cout <<  __FUNCTION__ << " cookie_it->value: " << cookie_it->value << std::endl;
     // Look it up in Redis
     session_store store{*redis_};
     auto result = store.get_user_by_session(cookie_it->value, yield);
@@ -69,6 +70,7 @@ result_with_message<std::int64_t> cookie_auth_service::user_id_from_cookie(
         else
             return err;
     }
+    std::cout << __FUNCTION__ << " user_id from reids result.value: " << result.value() << std::endl;
     return result.value();
 }
 
@@ -77,8 +79,8 @@ result_with_message<user> cookie_auth_service::user_from_cookie(
     boost::asio::yield_context yield
 )
 {
-    auto user_id_result = user_id_from_cookie(req_headers, yield);
+    auto user_id_result = user_id_from_cookie(req_headers, yield);  //通过cookie获取user_id
     if (user_id_result.has_error())
         return std::move(user_id_result).error();
-    return mysql_->get_user_by_id(*user_id_result, yield);
+    return mysql_->get_user_by_id(*user_id_result, yield);          //然后通过user_id从MySQL中查询用户名
 }

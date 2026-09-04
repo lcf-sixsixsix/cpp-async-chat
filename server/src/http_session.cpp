@@ -133,7 +133,7 @@ void chat::run_http_session(
         stream.expires_after(std::chrono::seconds(30));
 
         // Read a request
-        http::async_read(stream, buff, parser.get(), yield[ec]);
+        http::async_read(stream, buff, parser.get(), yield[ec]);    //读取socket数据
 
         if (ec == http::error::end_of_stream)
         {
@@ -148,8 +148,8 @@ void chat::run_http_session(
         }
 
         // See if it is a WebSocket Upgrade
-        if (boost::beast::websocket::is_upgrade(parser.get()))
-        {
+        if (boost::beast::websocket::is_upgrade(parser.get()))  //判断是不是websocket请求
+        {           //如果是webscocket请求,则按照websocket协议进行处理,否则按照http协议进行处理
             // Create a websocket, transferring ownership of the socket
             // and the buffer (we're not using them again here)
             websocket ws(stream.release_socket(), parser.release(), std::move(buff));
@@ -179,10 +179,10 @@ void chat::run_http_session(
             }
             return;
         }
-
+        //到这里说明不是websocket请求,而是http请求
         // It's a regular HTTP request.
         // Attempt to serve it and generate a response
-        http::message_generator msg = handle_http_request(parser.release(), *state, yield);
+        http::message_generator msg = handle_http_request(parser.release(), *state, yield); //处理http请求
 
         // Determine if we should close the connection
         bool keep_alive = msg.keep_alive();
